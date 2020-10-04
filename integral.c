@@ -1,8 +1,8 @@
 /*
 ============================================================================
 Filename    : integral.c
-Author      : Your names goes here
-SCIPER		: Your SCIPER numbers
+Author      : Danayng Wang
+SCIPER		: 321729
 ============================================================================
 */
 
@@ -19,12 +19,8 @@ int main (int argc, const char *argv[]) {
     double integral;
 
     if (argc != 5) {
-        num_threads = 1;
-        num_samples = 5000000;
-        a = 5;
-        b = 9;
-        // printf("Invalid input! Usage: ./integral <num_threads> <num_samples> <a> <b>\n");
-		// return 1;
+        printf("Invalid input! Usage: ./integral <num_threads> <num_samples> <a> <b>\n");
+		return 1;
 	} else {
         num_threads = atoi(argv[1]);
         num_samples = atoi(argv[2]);
@@ -48,17 +44,20 @@ double integrate (int num_threads, int samples, int a, int b, double (*f)(double
     /* Your code goes here */
     //double pixel;
     int i;
-    double domain = (double)(b-a);
-    rand_gen gen = init_rand();
+    double domain = (double) (b - a);
+    rand_gen gen;
     double sum = 0;
 
-#pragma omp parallel for num_threads(num_threads) reduction(+:sum) shared(samples) private(i)
-    for (i = 0; i < samples; i++) {
-        double x = next_rand(gen);
-        x = (double)a+ domain * x;
-        sum += f(x);
+#pragma omp parallel reduction(+:sum)  private(i, gen)
+    {
+        gen = init_rand();
+#pragma omp for
+        for (i = 0; i < samples; i++) {
+            double x = next_rand(gen);
+            x = (double) a + domain * x;
+            sum += f(x);
+        }
     }
-    free_rand(gen);
     integral = sum / (double)samples * domain;
     return integral;
 }
