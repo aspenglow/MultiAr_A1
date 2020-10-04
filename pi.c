@@ -45,7 +45,7 @@ double calculate_pi (int num_threads, int samples) {
     rand_gen gen;
     omp_set_num_threads(num_threads);
 
-#pragma omp parallel reduction(+:count)  private(i)
+#pragma omp parallel reduction(+:count)  private(i, gen)
     gen = init_rand();
 #pragma omp for
 
