@@ -58,6 +58,7 @@ double integrate (int num_threads, int samples, int a, int b, double (*f)(double
         x = (double)a+ domain * x;
         sum += f(x);
     }
+    free_rand(gen);
     integral = sum / (double)samples * domain;
     return integral;
 }

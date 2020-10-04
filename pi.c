@@ -18,10 +18,8 @@ int main (int argc, const char *argv[]) {
     double pi;
 
     if (argc != 3) {
-        num_threads = 4;
-        num_samples = 500000;
-		//printf("Invalid input! Usage: ./pi <num_threads> <num_samples> \n");
-		//return 1;
+        printf("Invalid input! Usage: ./pi <num_threads> <num_samples> \n");
+		return 1;
 	} else {
         num_threads = atoi(argv[1]);
         num_samples = atoi(argv[2]);
