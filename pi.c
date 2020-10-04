@@ -18,8 +18,10 @@ int main (int argc, const char *argv[]) {
     double pi;
 
     if (argc != 3) {
-        printf("Invalid input! Usage: ./pi <num_threads> <num_samples> \n");
-		return 1;
+        num_threads = 4;
+        num_samples = 500000;
+		//printf("Invalid input! Usage: ./pi <num_threads> <num_samples> \n");
+		//return 1;
 	} else {
         num_threads = atoi(argv[1]);
         num_samples = atoi(argv[2]);
@@ -39,15 +41,14 @@ double calculate_pi (int num_threads, int samples) {
     /* Your code goes here */
 
     int i;
-    int tid;
-    //double x, y;
-
-    int count = 0, total = 0;
-    rand_gen gen = init_rand();
+    int count = 0;
+    rand_gen gen;
     omp_set_num_threads(num_threads);
 
-#pragma omp parallel for num_threads(num_threads) \
-    reduction(+:count) shared(samples) private(i)
+#pragma omp parallel reduction(+:count)  private(i)
+    gen = init_rand();
+#pragma omp for
+
     for (i = 0; i < samples; i++) {
         double x = next_rand(gen);
         double y = next_rand(gen);
