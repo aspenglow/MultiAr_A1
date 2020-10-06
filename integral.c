@@ -1,8 +1,8 @@
 /*
 ============================================================================
 Filename    : integral.c
-Author      : Your names goes here
-SCIPER		: Your SCIPER numbers
+Author      : Danyang Wang, Michel Jean Antoine Morales
+SCIPER		: 321729, 283657
 ============================================================================
 */
 
