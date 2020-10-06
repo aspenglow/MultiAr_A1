@@ -1,8 +1,8 @@
 /*
 ============================================================================
 Filename    : pi.c
-Author      : Danyang Wang
-SCIPER		: 321729
+Author      : Your names goes here
+SCIPER		: Your SCIPER numbers
 ============================================================================
 */
 
@@ -18,7 +18,7 @@ int main (int argc, const char *argv[]) {
     double pi;
 
     if (argc != 3) {
-        num_threads = 4;
+        num_threads = 16;
         num_samples = 500000;
 		//printf("Invalid input! Usage: ./pi <num_threads> <num_samples> \n");
 		//return 1;
@@ -46,17 +46,19 @@ double calculate_pi (int num_threads, int samples) {
     omp_set_num_threads(num_threads);
 
 #pragma omp parallel reduction(+:count)  private(i, gen)
-    gen = init_rand();
+    {
+        gen = init_rand();
 #pragma omp for
 
-    for (i = 0; i < samples; i++) {
-        double x = next_rand(gen);
-        double y = next_rand(gen);
-        if (x * x + y * y <= 1) {
-            count++;
+        for (i = 0; i < samples; i++) {
+            double x = next_rand(gen);
+            double y = next_rand(gen);
+            if (x * x + y * y <= 1) {
+                count++;
+            }
         }
+        free_rand(gen);
     }
-    free_rand(gen);
     pi = (double)count / samples * 4;
     return pi;
 }

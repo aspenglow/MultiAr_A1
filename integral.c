@@ -1,8 +1,8 @@
 /*
 ============================================================================
 Filename    : integral.c
-Author      : Danayng Wang
-SCIPER		: 321729
+Author      : Your names goes here
+SCIPER		: Your SCIPER numbers
 ============================================================================
 */
 
@@ -47,6 +47,7 @@ double integrate (int num_threads, int samples, int a, int b, double (*f)(double
     double domain = (double) (b - a);
     rand_gen gen;
     double sum = 0;
+    omp_set_num_threads(num_threads);
 
 #pragma omp parallel reduction(+:sum)  private(i, gen)
     {
